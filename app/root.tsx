@@ -9,6 +9,24 @@ import type { LinksFunction } from "@remix-run/node";
 
 import "./tailwind.css";
 
+export type RootLoader = () => {
+  ENV: {
+    MAILGUN_API_KEY: string;
+    MAILGUN_DOMAIN: string;
+    CONTACT_EMAIL: string;
+  };
+};
+
+export const loader: RootLoader = () => {
+  return {
+    ENV: {
+      MAILGUN_API_KEY: process.env.MAILGUN_API_KEY || '',
+      MAILGUN_DOMAIN: process.env.MAILGUN_DOMAIN || '',
+      CONTACT_EMAIL: process.env.CONTACT_EMAIL || '',
+    },
+  };
+};
+
 export const links: LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
   {
